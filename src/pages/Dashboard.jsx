@@ -29,7 +29,7 @@ const Dashboard = () => {
     // Update chart data every 10 seconds
     const chartInterval = setInterval(() => {
       setHeartRateData(generateTimeSeriesData());
-    }, 10000);
+    }, 3000);
 
     return () => {
       clearInterval(vitalsInterval);
