@@ -15,10 +15,6 @@ const Dashboard = () => {
     { name: 'Recovery', value: 40, color: '#3B82F6' }
   ];
 
-  const patients = [
-    { id: 1, name: "Sarah Johnson", status: "Critical", time: "10:30 AM" },
-    { id: 2, name: "Michael Brown", status: "Stable", time: "11:45 AM" },
-  ];
 
   useEffect(() => {
     // Update vitals every 3 seconds
@@ -46,7 +42,7 @@ const Dashboard = () => {
         <PatientDistribution data={patientDistribution} />
       </div>
 
-      <RecentPatients patients={patients} />
+      <RecentPatients limit={2} />
     </div>
   );
 };
