@@ -1,53 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { generateHealthData, generateTimeSeriesData } from '../utils/healthDataGenerator';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Heart, Activity, Thermometer, Droplet } from 'lucide-react';
-import HeartRateChart from '../components/dashboard/HeartRateChart';
+import { patientService } from '../services/patientService';
+import { toast } from 'react-hot-toast';
 
 const PatientDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [patient, setPatient] = useState(null);
-  const [vitals, setVitals] = useState(generateHealthData());
-  const [heartRateData, setHeartRateData] = useState(generateTimeSeriesData());
-
-  // Simulate fetching patient data
-  useEffect(() => {
-    // In a real app, you would fetch this data from your API
-    setPatient({
-      id: parseInt(id),
-      name: "Sarah Johnson",
-      age: 45,
-      gender: "Female",
-      contact: "+1 234-567-8900",
-      email: "sarah.j@email.com",
-      status: "Critical",
-      lastVisit: "2024-02-20",
-      doctor: "Dr. Smith",
-      bloodType: "A+",
-      height: "5'6\"",
-      weight: "140 lbs",
-      allergies: "Penicillin",
-      medications: ["Lisinopril", "Metformin"]
-    });
-  }, [id]);
+  const [loading, setLoading] = useState(true);
+  const [vitals, setVitals] = useState({
+    heartRate: '75',
+    bloodPressureSystolic: '120',
+    bloodPressureDiastolic: '80',
+    temperature: '98.6',
+    glucoseLevel: '100'
+  });
 
   useEffect(() => {
-    const vitalsInterval = setInterval(() => {
-      setVitals(generateHealthData());
+    const fetchPatient = async () => {
+      try {
+        setLoading(true);
+        const data = await patientService.getPatientById(id);
+        setPatient(data);
+      } catch (error) {
+        toast.error(error.message || 'Failed to fetch patient details');
+        navigate('/patients');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatient();
+  }, [id, navigate]);
+
+  // Simulate updating vitals every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVitals(prev => ({
+        heartRate: Math.floor(70 + Math.random() * 20).toString(),
+        bloodPressureSystolic: Math.floor(110 + Math.random() * 30).toString(),
+        bloodPressureDiastolic: Math.floor(70 + Math.random() * 20).toString(),
+        temperature: (97 + Math.random() * 3).toFixed(1),
+        glucoseLevel: Math.floor(90 + Math.random() * 30).toString()
+      }));
     }, 3000);
 
-    const chartInterval = setInterval(() => {
-      setHeartRateData(generateTimeSeriesData());
-    }, 10000);
-
-    return () => {
-      clearInterval(vitalsInterval);
-      clearInterval(chartInterval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   if (!patient) {
-    return <div>Loading...</div>;
+    return <div className="p-8 text-center text-gray-500">Patient not found</div>;
   }
 
   return (
@@ -62,11 +73,13 @@ const PatientDetails = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{patient.name}</h1>
-            <p className="text-gray-500">Patient ID: {patient.id}</p>
+            <p className="text-gray-500">Patient ID: {patient._id}</p>
           </div>
           <span className={`ml-auto px-4 py-2 rounded-full text-sm ${
             patient.status === 'Critical' 
               ? 'bg-red-100 text-red-600' 
+              : patient.status === 'Recovery'
+              ? 'bg-yellow-100 text-yellow-600'
               : 'bg-green-100 text-green-600'
           }`}>
             {patient.status}
@@ -83,12 +96,10 @@ const PatientDetails = () => {
             {[
               { label: 'Age', value: patient.age },
               { label: 'Gender', value: patient.gender },
-              { label: 'Blood Type', value: patient.bloodType },
-              { label: 'Height', value: patient.height },
-              { label: 'Weight', value: patient.weight },
               { label: 'Contact', value: patient.contact },
               { label: 'Email', value: patient.email },
-              { label: 'Doctor', value: patient.doctor }
+              { label: 'Doctor', value: patient.doctor },
+              { label: 'Last Visit', value: new Date(patient.lastVisit).toLocaleDateString() }
             ].map((item, index) => (
               <div key={index} className="flex justify-between">
                 <span className="text-gray-500">{item.label}:</span>
@@ -143,31 +154,14 @@ const PatientDetails = () => {
         </div>
       </div>
 
- 
-
-      {/* Medical History - Now with better spacing */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-lg font-semibold mb-6">Medications</h2>
-          <div className="space-y-4">
-            {patient.medications.map((medication, index) => (
-              <div key={index} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                <span className="text-gray-700">{medication}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-lg font-semibold mb-6">Allergies</h2>
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <span className="text-gray-700">{patient.allergies}</span>
-            </div>
-          </div>
-        </div>
+      {/* Back to Patients Button */}
+      <div className="mt-6">
+        <button
+          onClick={() => navigate('/patients')}
+          className="px-4 py-2 text-blue-600 hover:text-blue-700"
+        >
+          ← Back to Patients List
+        </button>
       </div>
     </div>
   );

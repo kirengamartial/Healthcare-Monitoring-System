@@ -12,10 +12,10 @@ const App = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/patients/:id" element={<PatientDetails />} />
-          {/* Add other routes as needed */}
         </Routes>
       </Layout>
     </BrowserRouter>
   );
-}
-export default App
+};
+
+export default App;
