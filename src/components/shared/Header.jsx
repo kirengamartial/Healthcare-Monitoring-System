@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, Search, LogOut } from 'lucide-react';
 import authService from '../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate()
   
   useEffect(() => {
     const userData = authService.getUser();
@@ -29,7 +31,7 @@ const Header = () => {
     authService.logout();
     setUser(null);
     setShowDropdown(false);
-    window.location.href = '/login';
+    navigate('/login')
   };
 
   const getInitials = (name) => {
