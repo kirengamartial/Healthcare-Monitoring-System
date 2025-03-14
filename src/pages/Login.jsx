@@ -34,10 +34,9 @@ const Login = () => {
 
       navigate('/');
       toast.success("Login successfully")
-    } catch (err) {
-      console.log(err)
-      toast.error("Invalid email or password")
-      setError(typeof err === 'string' ? err : 'Invalid email or password');
+    } catch (error) {
+      console.log(error);
+      setError(error?.message || "An unknown error occurred");
     } finally {
       setLoading(false);
     }

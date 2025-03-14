@@ -47,8 +47,9 @@ const Register = () => {
       
       navigate('/login');
       toast.success("Register successfully")
-    } catch (err) {
-      setError(typeof err === 'string' ? err : 'Registration failed');
+    } catch (error) {
+      console.log(error)
+      setError(error?.message || "An unknown error occurred");
     } finally {
       setLoading(false);
     }
