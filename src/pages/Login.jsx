@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 import toast from 'react-hot-toast';
 
@@ -85,9 +85,9 @@ const Login = () => {
               placeholder="Enter your password"
             />
             <div className="flex justify-end mt-2">
-              <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
+              <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
                 Forgot password?
-              </a>
+              </Link>
             </div>
           </div>
           
@@ -103,9 +103,9 @@ const Login = () => {
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Don't have an account?{' '}
-            <a href="/register" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link to="/register" className="text-blue-600 hover:text-blue-800 font-medium">
               Register
-            </a>
+            </Link>
           </p>
         </div>
       </div>
