@@ -1,7 +1,6 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import { Toaster, toast } from 'react-hot-toast';
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import { Toaster } from "react-hot-toast";
 
 const Layout = ({ children }) => {
   return (
@@ -17,32 +16,32 @@ const Layout = ({ children }) => {
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#fff',
-              color: '#363636',
-              padding: '16px',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              background: "#fff",
+              color: "#363636",
+              padding: "16px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             },
             success: {
               duration: 5000,
               style: {
-                background: '#10B981',
-                color: '#fff',
+                background: "#10B981",
+                color: "#fff",
               },
               iconTheme: {
-                primary: '#fff',
-                secondary: '#10B981',
+                primary: "#fff",
+                secondary: "#10B981",
               },
             },
             error: {
               duration: 6000,
               style: {
-                background: '#EF4444',
-                color: '#fff',
+                background: "#EF4444",
+                color: "#fff",
               },
               iconTheme: {
-                primary: '#fff',
-                secondary: '#EF4444',
+                primary: "#fff",
+                secondary: "#EF4444",
               },
             },
           }}
