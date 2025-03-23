@@ -19,7 +19,7 @@ const CalendarPage = () => {
         <h1 className="text-2xl font-bold text-gray-900">Calendar</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 text-white text-sm lg:text-base rounded-lg hover:bg-blue-700"
         >
           New Appointment
         </button>
