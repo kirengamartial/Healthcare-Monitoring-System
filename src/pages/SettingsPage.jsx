@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { Bell, Shield, Monitor, Globe, Mail } from "lucide-react";
 import { toast } from "react-hot-toast";
 import authService from "../services/authService";
+import PreferencesSettings from "../components/settings/PreferenceSettings";
+import MonitoringSettings from "../components/settings/MonitoringSettings";
+import NotificationsSettings from "../components/settings/NotificationSettings";
+import SecuritySettings from "../components/settings/SecuritySettings";
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({
@@ -59,184 +63,35 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="p-8">
+    <>
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Settings</h1>
 
       <div className="grid grid-cols-1 gap-6">
         {/* Notifications Settings */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Bell className="text-blue-600" size={24} />
-            <h2 className="text-lg font-semibold">Notifications</h2>
-          </div>
-
-          <div className="space-y-4">
-            {Object.entries(settings.notifications).map(([key, value]) => (
-              <div key={key} className="flex items-center justify-between">
-                <label className="text-gray-700">
-                  {key.split(/(?=[A-Z])/).join(" ")}
-                </label>
-                <input
-                  type="checkbox"
-                  checked={value}
-                  onChange={(e) =>
-                    handleChange("notifications", key, e.target.checked)
-                  }
-                  className="w-4 h-4 text-blue-600"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <NotificationsSettings
+          notifications={settings.notifications}
+          onChange={(field, value) =>
+            handleChange("notifications", field, value)
+          }
+        />
 
         {/* Monitoring Thresholds */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Monitor className="text-blue-600" size={24} />
-            <h2 className="text-lg font-semibold">Monitoring Thresholds</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(settings.monitoring).map(([key, value]) => (
-              <div key={key}>
-                <label className="block text-sm text-gray-700 mb-1">
-                  {key.split(/(?=[A-Z])/).join(" ")}
-                </label>
-                <input
-                  type="number"
-                  value={value}
-                  onChange={(e) =>
-                    handleChange("monitoring", key, e.target.value)
-                  }
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <MonitoringSettings
+          monitoring={settings.monitoring}
+          onChange={(field, value) => handleChange("monitoring", field, value)}
+        />
 
         {/* Preferences */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Globe className="text-blue-600" size={24} />
-            <h2 className="text-lg font-semibold">Preferences</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm text-gray-700 mb-1">
-                Language
-              </label>
-              <select
-                value={settings.preferences.language}
-                onChange={(e) =>
-                  handleChange("preferences", "language", e.target.value)
-                }
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-1">Theme</label>
-              <select
-                value={settings.preferences.theme}
-                onChange={(e) =>
-                  handleChange("preferences", "theme", e.target.value)
-                }
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-1">
-                Time Format
-              </label>
-              <select
-                value={settings.preferences.timeFormat}
-                onChange={(e) =>
-                  handleChange("preferences", "timeFormat", e.target.value)
-                }
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="12h">12-hour</option>
-                <option value="24h">24-hour</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-1">
-                Date Format
-              </label>
-              <select
-                value={settings.preferences.dateFormat}
-                onChange={(e) =>
-                  handleChange("preferences", "dateFormat", e.target.value)
-                }
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        <PreferencesSettings
+          preferences={settings.preferences}
+          onChange={(field, value) => handleChange("preferences", field, value)}
+        />
 
         {/* Security Settings */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="text-blue-600" size={24} />
-            <h2 className="text-lg font-semibold">Security</h2>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-gray-700">Two-factor Authentication</label>
-              <input
-                type="checkbox"
-                checked={settings.security.twoFactorAuth}
-                onChange={(e) =>
-                  handleChange("security", "twoFactorAuth", e.target.checked)
-                }
-                className="w-4 h-4 text-blue-600"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-700 mb-1">
-                Session Timeout (minutes)
-              </label>
-              <input
-                type="number"
-                value={settings.security.sessionTimeout}
-                onChange={(e) =>
-                  handleChange("security", "sessionTimeout", e.target.value)
-                }
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="text-gray-700">Auto Logout on Inactivity</label>
-              <input
-                type="checkbox"
-                checked={settings.security.autoLogout}
-                onChange={(e) =>
-                  handleChange("security", "autoLogout", e.target.checked)
-                }
-                className="w-4 h-4 text-blue-600"
-              />
-            </div>
-          </div>
-        </div>
+        <SecuritySettings
+          security={settings.security}
+          onChange={(field, value) => handleChange("security", field, value)}
+        />
       </div>
 
       <div className="mt-6 flex justify-end">
@@ -248,7 +103,7 @@ const SettingsPage = () => {
           {loading ? "Saving..." : "Save Changes"}
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
