@@ -1,20 +1,23 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/shared/Layout';
-import Dashboard from './pages/Dashboard';
-import PatientsPage from './pages/PatientsPage';
-import PatientDetails from './pages/PatientDetails';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import { Toaster } from 'react-hot-toast';
-import authService from './services/authService';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/shared/Layout";
+import Dashboard from "./pages/Dashboard";
+import PatientsPage from "./pages/PatientsPage";
+import PatientDetails from "./pages/PatientDetails";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import { Toaster } from "react-hot-toast";
+import authService from "./services/authService";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import CalendarPage from "./pages/CalendarPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = authService.isAuthenticated();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return children;
 };
 
@@ -26,64 +29,103 @@ const App = () => {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#fff',
-            color: '#363636',
-            padding: '16px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            background: "#fff",
+            color: "#363636",
+            padding: "16px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           },
           success: {
             duration: 5000,
             style: {
-              background: '#10B981',
-              color: '#fff',
+              background: "#10B981",
+              color: "#fff",
             },
             iconTheme: {
-              primary: '#fff',
-              secondary: '#10B981',
+              primary: "#fff",
+              secondary: "#10B981",
             },
           },
           error: {
             duration: 6000,
             style: {
-              background: '#EF4444',
-              color: '#fff',
+              background: "#EF4444",
+              color: "#fff",
             },
             iconTheme: {
-              primary: '#fff',
-              secondary: '#EF4444',
+              primary: "#fff",
+              secondary: "#EF4444",
             },
           },
         }}
       />
-      
+
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/patients" element={
-          <ProtectedRoute>
-            <Layout>
-              <PatientsPage />
-            </Layout>
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/patients/:id" element={
-          <ProtectedRoute>
-            <Layout>
-              <PatientDetails />
-            </Layout>
-          </ProtectedRoute>
-        } />
+
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patients"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <PatientsPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patients/:id"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <PatientDetails />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <AnalyticsPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <CalendarPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <SettingsPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
