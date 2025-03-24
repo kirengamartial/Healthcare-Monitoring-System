@@ -1,36 +1,12 @@
 import { Clock } from "lucide-react";
 
-const UpcomingAppointments = () => {
-  const appointments = [
-    {
-      id: 1,
-      patientName: "John Doe",
-      time: "09:00 AM",
-      date: "2024-03-20",
-      type: "Check-up",
-    },
-    {
-      id: 2,
-      patientName: "Jane Smith",
-      time: "10:30 AM",
-      date: "2024-03-20",
-      type: "Follow-up",
-    },
-    {
-      id: 3,
-      patientName: "Mike Johnson",
-      time: "02:00 PM",
-      date: "2024-03-21",
-      type: "Consultation",
-    },
-    {
-      id: 4,
-      patientName: "Martial Ishimwe",
-      time: "06:00 PM",
-      date: "2024-03-21",
-      type: "Consultation",
-    },
-  ];
+const UpcomingAppointments = ({ appointments }) => {
+  // Sort appointments by date and time
+  const sortedAppointments = [...appointments].sort((a, b) => {
+    const dateA = new Date(`${a.date} ${a.time}`);
+    const dateB = new Date(`${b.date} ${b.time}`);
+    return dateA - dateB;
+  });
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6">
@@ -38,7 +14,7 @@ const UpcomingAppointments = () => {
         Upcoming Appointments
       </h3>
       <div className="space-y-4">
-        {appointments.map((appointment) => (
+        {sortedAppointments.map((appointment) => (
           <div
             key={appointment.id}
             className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50"
@@ -51,6 +27,7 @@ const UpcomingAppointments = () => {
               <p className="text-sm text-gray-500">
                 {appointment.time} - {appointment.type}
               </p>
+              <p className="text-sm text-gray-500">{appointment.date}</p>
             </div>
           </div>
         ))}

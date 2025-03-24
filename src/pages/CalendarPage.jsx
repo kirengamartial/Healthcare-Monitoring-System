@@ -7,10 +7,44 @@ import CalendarHeader from "../components/calendar/CalendarHeader";
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [appointments, setAppointments] = useState([
+    {
+      id: 1,
+      patientName: "John Doe",
+      time: "09:00 AM",
+      date: "2024-03-20",
+      type: "Check-up",
+    },
+    {
+      id: 2,
+      patientName: "Jane Smith",
+      time: "10:30 AM",
+      date: "2024-03-20",
+      type: "Follow-up",
+    },
+    {
+      id: 3,
+      patientName: "Mike Johnson",
+      time: "02:00 PM",
+      date: "2024-03-21",
+      type: "Consultation",
+    },
+  ]);
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setIsModalOpen(true);
+  };
+
+  const handleAddAppointment = (newAppointment) => {
+    setAppointments((prev) => [
+      ...prev,
+      {
+        ...newAppointment,
+        id: Math.max(...prev.map((a) => a.id), 0) + 1,
+      },
+    ]);
+    setIsModalOpen(false);
   };
 
   return (
@@ -19,7 +53,7 @@ const CalendarPage = () => {
         <h1 className="text-2xl font-bold text-gray-900">Calendar</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white text-sm lg:text-base rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           New Appointment
         </button>
@@ -36,13 +70,14 @@ const CalendarPage = () => {
             onDateSelect={handleDateSelect}
           />
         </div>
-        <UpcomingAppointments />
+        <UpcomingAppointments appointments={appointments} />
       </div>
 
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         selectedDate={selectedDate}
+        onSave={handleAddAppointment}
       />
     </div>
   );
