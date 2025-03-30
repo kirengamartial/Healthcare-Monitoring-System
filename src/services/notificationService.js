@@ -1,7 +1,7 @@
-import api from "./api";
+import api from './api';
 
-export const patientService = {
-  getAllPatients: async (searchQuery = '') => {
+const notificationService = {
+  getNotifications: async (params = {}) => {
     try {
       const token = localStorage.getItem('authToken');
       
@@ -9,20 +9,37 @@ export const patientService = {
         headers: {
           'x-auth-token': token,
           'Authorization': `Bearer ${token}`
-        }
+        },
+        params
       };
       
-      const response = await api.get(
-        `/patients${searchQuery ? `?search=${searchQuery}` : ''}`, 
-        config
-      );
+      const response = await api.get('/notifications', config);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
 
-  getPatientById: async (id) => {
+  getUnreadCount: async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      
+      const config = {
+        headers: {
+          'x-auth-token': token,
+          'Authorization': `Bearer ${token}`
+        },
+        params: { limit: 1, unreadOnly: true }
+      };
+      
+      const response = await api.get('/notifications', config);
+      return response.data.unread;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
+
+  markAsRead: async (notificationId) => {
     try {
       const token = localStorage.getItem('authToken');
       
@@ -33,14 +50,14 @@ export const patientService = {
         }
       };
       
-      const response = await api.get(`/patients/${id}`, config);
+      const response = await api.put(`/notifications/${notificationId}/read`, {}, config);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
 
-  createPatient: async (patientData) => {
+  markAllAsRead: async () => {
     try {
       const token = localStorage.getItem('authToken');
       
@@ -51,14 +68,14 @@ export const patientService = {
         }
       };
       
-      const response = await api.post('/patients', patientData, config);
+      const response = await api.put('/notifications/read-all', {}, config);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-  
-  updatePatient: async (id, patientData) => {
+
+  deleteNotification: async (notificationId) => {
     try {
       const token = localStorage.getItem('authToken');
       
@@ -69,25 +86,7 @@ export const patientService = {
         }
       };
       
-      const response = await api.put(`/patients/${id}`, patientData, config);
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || error.message;
-    }
-  },
-  
-  deletePatient: async (id) => {
-    try {
-      const token = localStorage.getItem('authToken');
-      
-      const config = {
-        headers: {
-          'x-auth-token': token,
-          'Authorization': `Bearer ${token}`
-        }
-      };
-      
-      const response = await api.delete(`/patients/${id}`, config);
+      const response = await api.delete(`/notifications/${notificationId}`, config);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -95,4 +94,4 @@ export const patientService = {
   }
 };
 
-export default patientService;
+export default notificationService;

@@ -8,19 +8,26 @@ const RecentPatients = ({ limit = 5 }) => {
   const [loading, setLoading] = useState(false);
 
   const fetchRecentPatients = useCallback(async () => {
+    const token = localStorage.getItem('authToken');
     try {
       setLoading(true);
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/patients`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/patients`,
+        {  
+          headers: {
+            'x-auth-token': token,
+            'Authorization': `Bearer ${token}`
+          },
+        }
       );
-
+  
       if (!response.ok) throw new Error("Failed to fetch patients");
-
+  
       const data = await response.json();
       const sortedPatients = data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-
+  
       setPatients(sortedPatients.slice(0, limit));
     } catch (error) {
       toast.error(error.message || "Failed to fetch recent patients");

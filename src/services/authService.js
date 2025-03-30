@@ -1,17 +1,5 @@
 import api from './api';
-
-const setAuthToken = (token) => {
-  if (token) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete api.defaults.headers.common['Authorization'];
-  }
-};
-
-const token = localStorage.getItem('authToken');
-if (token) {
-  setAuthToken(token);
-}
+import { setAuthToken } from './authUtils';
 
 const authService = {
   register: async (userData) => {

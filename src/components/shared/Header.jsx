@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Search, LogOut } from 'lucide-react';
+import { Search, LogOut } from 'lucide-react';
 import authService from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import NotificationBell from '../../components/shared/NotificationBell';
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   
   useEffect(() => {
     const userData = authService.getUser();
@@ -31,7 +32,7 @@ const Header = () => {
     authService.logout();
     setUser(null);
     setShowDropdown(false);
-    navigate('/login')
+    navigate('/login');
   };
 
   const getInitials = (name) => {
@@ -58,9 +59,8 @@ const Header = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 rounded-full hover:bg-gray-100 relative">
-            <Bell className="text-gray-600" size={20} />
-          </button>
+          {/* Replace the Bell button with the NotificationBell component */}
+          <NotificationBell />
           
           <div className="relative" ref={dropdownRef}>
             <div 
