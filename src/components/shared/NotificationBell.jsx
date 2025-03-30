@@ -13,10 +13,10 @@ const NotificationBell = () => {
 
   useEffect(() => {
     fetchNotifications();
-  
     const interval = setInterval(() => {
+      fetchNotifications();
       fetchUnreadCount();
-    }, 30000);
+    }, 5000);
     
     return () => clearInterval(interval);
   }, []);
@@ -155,9 +155,7 @@ const NotificationBell = () => {
             )}
           </div>
 
-          {loading ? (
-            <div className="py-4 text-center text-gray-500">Loading...</div>
-          ) : notifications.length === 0 ? (
+          { notifications.length === 0 ? (
             <div className="py-4 text-center text-gray-500">No notifications</div>
           ) : (
             notifications.map((notification) => (
