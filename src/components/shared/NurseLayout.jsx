@@ -1,15 +1,17 @@
-import Sidebar from "./Sidebar";
+
 import Header from "./Header";
 import { Toaster } from "react-hot-toast";
+import NurseSidebar from "./NurseSidebar";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const NurseLayout = () => {
   return (
     <div className="flex h-screen bg-gray-100 font-geist">
-      <Sidebar />
+      <NurseSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-5 lg:p-8">
-          {children}
+        <Outlet />
         </main>
         <Toaster
           position="top-right"
@@ -51,4 +53,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default NurseLayout;

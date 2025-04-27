@@ -21,6 +21,27 @@ export const patientService = {
       throw error.response?.data || error.message;
     }
   },
+  getAllPatientsByNurse: async (searchQuery = '') => {
+    try {
+      const token = localStorage.getItem('authToken');
+      
+      const config = {
+        headers: {
+          'x-auth-token': token,
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      
+      const response = await api.get(
+        `/patients/all${searchQuery ? `?search=${searchQuery}` : ''}`, 
+        config
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
+
 
   getPatientById: async (id) => {
     try {

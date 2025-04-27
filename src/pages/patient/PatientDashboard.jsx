@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import StatsGrid from '../components/dashboard/StatsGrid';
-import HeartRateChart from '../components/dashboard/HeartRateChart';
-import PatientDistribution from '../components/dashboard/PatientDistribution';
-import RecentPatients from '../components/dashboard/RecentPatients';
-import { generateHealthData, generateTimeSeriesData } from '../utils/healthDataGenerator';
+import StatsGrid from '../../components/dashboard/StatsGrid';
+import HeartRateChart from '../../components/dashboard/HeartRateChart';
+import PatientDistribution from '../../components/dashboard/PatientDistribution';
+import { generateHealthData, generateTimeSeriesData } from '../../utils/healthDataGenerator';
 
 const Dashboard = () => {
   const [vitals, setVitals] = useState(generateHealthData());
@@ -42,7 +41,6 @@ const Dashboard = () => {
         <PatientDistribution data={patientDistribution} />
       </div>
 
-      <RecentPatients limit={2} />
     </div>
   );
 };

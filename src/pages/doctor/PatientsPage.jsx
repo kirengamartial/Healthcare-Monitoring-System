@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, Search } from "lucide-react";
-import { patientService } from "../services/patientService";
+import { patientService } from "../../services/patientService";
 import { toast } from "react-hot-toast";
 
 const PatientsPage = () => {
@@ -18,7 +18,6 @@ const PatientsPage = () => {
     contact: "",
     email: "",
     status: "Stable",
-    doctor: "",
   });
 
   // Fetch patients on component mount and when search query changes
@@ -61,7 +60,6 @@ const PatientsPage = () => {
         contact: "",
         email: "",
         status: "Stable",
-        doctor: "",
       });
       toast.success("Patient created successfully");
     } catch (error) {
@@ -122,7 +120,6 @@ const PatientsPage = () => {
                   <th className="p-4">Gender</th>
                   <th className="p-4">Contact</th>
                   <th className="p-4">Status</th>
-                  <th className="p-4">Doctor</th>
                   <th className="p-4">Actions</th>
                 </tr>
               </thead>
@@ -161,10 +158,9 @@ const PatientsPage = () => {
                         {patient.status}
                       </span>
                     </td>
-                    <td className="p-4">{patient.doctor}</td>
                     <td className="p-4">
                       <button
-                        onClick={() => navigate(`/patients/${patient._id}`)}
+                        onClick={() => navigate(`/doctor/patients/${patient._id}`)}
                         className="text-blue-600 hover:text-blue-700"
                       >
                         View Details
@@ -240,17 +236,6 @@ const PatientsPage = () => {
                 value={newPatient.email}
                 onChange={(e) =>
                   setNewPatient({ ...newPatient, email: e.target.value })
-                }
-                required
-                disabled={loading}
-              />
-              <input
-                type="text"
-                placeholder="Doctor"
-                className="w-full p-2 border rounded-lg"
-                value={newPatient.doctor}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, doctor: e.target.value })
                 }
                 required
                 disabled={loading}

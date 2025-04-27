@@ -23,15 +23,28 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
+  
     try {
       setLoading(true);
-      await authService.login({
+      const res = await authService.login({
         email: formData.email,
         password: formData.password,
       });
 
-      navigate("/");
+      const role = res?.user?.role;
+  
+      if (role === 'doctor') {
+        navigate('/doctor/dashboard');
+      } else if (role === 'patient') {
+        navigate('/patient/appointments');
+      } else if (role === 'nurse') {
+        navigate('/nurse/dashboard');
+      } else if (role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/');
+      }
+  
       toast.success("Login successfully");
     } catch (error) {
       console.log(error);
@@ -40,6 +53,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 font-geist">

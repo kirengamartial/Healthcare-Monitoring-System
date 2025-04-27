@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Heart, Activity, Thermometer, Droplet } from 'lucide-react';
-import { patientService } from '../services/patientService';
+import { patientService } from '../../services/patientService';
 import { toast } from 'react-hot-toast';
 
 const PatientDetails = () => {

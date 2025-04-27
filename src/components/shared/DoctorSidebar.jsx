@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -8,24 +8,24 @@ import {
   LogOut,
 } from "lucide-react";
 
-const Sidebar = () => {
+const DoctorSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard, path: "/" },
-    { name: "Patients", icon: Users, path: "/patients" },
-    { name: "Analytics", icon: BarChart, path: "/analytics" },
-    { name: "Calendar", icon: Calendar, path: "/calendar" },
-    { name: "Settings", icon: Settings, path: "/settings" },
+    { name: "Dashboard", icon: LayoutDashboard, path: "/doctor/dashboard" },
+    { name: "Patients", icon: Users, path: "/doctor/patients" },
+    { name: "Analytics", icon: BarChart, path: "/doctor/analytics" },
+    { name: "Calendar", icon: Calendar, path: "/doctor/calendar" },
+    { name: "Settings", icon: Settings, path: "/doctor/settings" },
   ];
 
   return (
     <div className="w-16 lg:w-64 bg-white shadow-lg">
       <div className="p-6">
-        <h1 className=" hidden lg:flex text-2xl font-bold text-blue-600">
+        <Link to='/' className=" hidden lg:flex text-2xl font-bold text-blue-600">
           HealthMonitor
-        </h1>
+        </Link>
       </div>
 
       <nav className="mt-6">
@@ -54,4 +54,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default DoctorSidebar;

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Bell, Shield, Monitor, Globe, Mail } from "lucide-react";
 import { toast } from "react-hot-toast";
-import authService from "../services/authService";
-import PreferencesSettings from "../components/settings/PreferenceSettings";
-import MonitoringSettings from "../components/settings/MonitoringSettings";
-import NotificationsSettings from "../components/settings/NotificationSettings";
-import SecuritySettings from "../components/settings/SecuritySettings";
+import authService from "../../services/authService";
+import PreferencesSettings from "../../components/settings/PreferenceSettings";
+import MonitoringSettings from "../../components/settings/MonitoringSettings";
+import NotificationsSettings from "../../components/settings/NotificationSettings";
+import SecuritySettings from "../../components/settings/SecuritySettings";
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({

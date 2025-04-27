@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { generateTimeSeriesData } from "../utils/healthDataGenerator";
-import StatsCards from "../components/analytics/StatsCards";
-import VitalSignsTrends from "../components/analytics/VitalSignsTrends";
-import PatientStatusDistribution from "../components/analytics/PatientStatusDistribution";
-import MonthlyAdmissions from "../components/analytics/MonthlyAdmissions";
+import { generateTimeSeriesData } from "../../utils/healthDataGenerator";
+import StatsCards from "../../components/analytics/StatsCards";
+import VitalSignsTrends from "../../components/analytics/VitalSignsTrends";
+import PatientStatusDistribution from "../../components/analytics/PatientStatusDistribution";
+import MonthlyAdmissions from "../../components/analytics/MonthlyAdmissions";
 
 const AnalyticsPage = () => {
   const [timeRange, setTimeRange] = useState("week");

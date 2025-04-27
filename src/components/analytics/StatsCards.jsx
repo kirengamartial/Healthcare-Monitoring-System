@@ -4,7 +4,7 @@ const StatsCards = () => {
   const statsCards = [
     {
       title: "Total Patients",
-      value: "248",
+      value: "2",
       change: "+12%",
       icon: Users,
       color: "blue",

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import CalendarGrid from "../components/calendar/CalendarGrid";
-import UpcomingAppointments from "../components/calendar/UpcomingAppointments";
-import AppointmentModal from "../components/calendar/AppointmentModal";
-import CalendarHeader from "../components/calendar/CalendarHeader";
+import CalendarGrid from "../../components/calendar/CalendarGrid";
+import UpcomingAppointments from "../../components/calendar/UpcomingAppointments";
+import AppointmentModal from "../../components/calendar/AppointmentModal";
+import CalendarHeader from "../../components/calendar/CalendarHeader";
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
