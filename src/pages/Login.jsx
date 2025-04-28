@@ -36,7 +36,7 @@ const Login = () => {
       if (role === 'doctor') {
         navigate('/doctor/dashboard');
       } else if (role === 'patient') {
-        navigate('/patient/appointments');
+        navigate('/patient/dashboard');
       } else if (role === 'nurse') {
         navigate('/nurse/dashboard');
       } else if (role === 'admin') {

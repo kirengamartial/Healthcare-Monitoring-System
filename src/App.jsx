@@ -18,6 +18,7 @@ import NurseDashboard from "./pages/nurse/NurseDashboard";
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NurseLayout from "./components/shared/NurseLayout";
+import CalendarNursePage from "./pages/nurse/CalendarNursePage";
 
 const App = () => {
   return (
@@ -58,7 +59,7 @@ const App = () => {
           </RoleBasedRoute>
         }>
           <Route path="dashboard" element={<NurseDashboard/>} />
-          <Route path="calendar" element={<CalendarPage />} />
+          <Route path="calendar" element={<CalendarNursePage />} />
           <Route path="settings" element={<SettingsPage/>} />
           <Route index element={<Navigate to="/nurse/dashboard" />} />
         </Route>
