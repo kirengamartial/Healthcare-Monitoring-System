@@ -2,25 +2,36 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
-  BarChart,
-  Calendar,
+  UserCog,
+  Stethoscope,
+  HeartPulse,
   Settings,
   LogOut,
 } from "lucide-react";
+import authService from "../../services/authService";
 
 const AdminSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/login');
+  };
+
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
+    { name: "All Users", icon: Users, path: "/admin/users" },
+    // { name: "Doctors", icon: Stethoscope, path: "/admin/doctors" },
+    // { name: "Nurses", icon: HeartPulse, path: "/admin/nurses" },
+    // { name: "Patients", icon: UserCog, path: "/admin/patients" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
 
   return (
     <div className="w-16 lg:w-64 bg-white shadow-lg">
       <div className="p-6">
-        <Link to='/' className=" hidden lg:flex text-2xl font-bold text-blue-600">
+        <Link to='/' className="hidden lg:flex text-2xl font-bold text-blue-600">
           HealthMonitor
         </Link>
       </div>
@@ -42,7 +53,10 @@ const AdminSidebar = () => {
       </nav>
 
       <div className="absolute bottom-0 w-64 p-6 border-t">
-        <button className="w-full flex items-center gap-3 text-gray-600 hover:text-red-600">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 text-gray-600 hover:text-red-600"
+        >
           <LogOut size={20} />
           <span className="hidden lg:flex">Logout</span>
         </button>

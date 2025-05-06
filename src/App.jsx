@@ -19,6 +19,8 @@ import PatientDashboard from "./pages/patient/PatientDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NurseLayout from "./components/shared/NurseLayout";
 import CalendarNursePage from "./pages/nurse/CalendarNursePage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+
 
 const App = () => {
   return (
@@ -70,6 +72,7 @@ const App = () => {
           </RoleBasedRoute>
         }>
           <Route path="dashboard" element={<AdminDashboard/>} />
+          <Route path="users" element={<AdminUsersPage/>} />
           <Route path="settings" element={<SettingsPage/>} />
           <Route index element={<Navigate to="/admin/dashboard" />} />
         </Route>
